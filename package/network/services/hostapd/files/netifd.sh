@@ -168,6 +168,9 @@ hostapd_common_add_bss_config() {
 	config_add_int mcast_rate
 	config_add_array basic_rate
 	config_add_array supported_rates
+
+	config_add_int eap_server
+	config_add_string eap_user_file dh_file server_cert
 }
 
 hostapd_set_bss_options() {
@@ -255,7 +258,20 @@ hostapd_set_bss_options() {
 				ownip \
 				eap_reauth_period dynamic_vlan \
 				vlan_naming vlan_tagged_interface \
-				vlan_bridge vlan_file
+				vlan_bridge vlan_file \
+				eap_server eap_user_file dh_file ca_cert server_cert priv_key priv_key_pwd
+
+			if [ "$eap_server" -ge 1 ]; then
+
+			append bss_conf "eap_server=$eap_server" "$N"
+			append bss_conf "eap_user_file=$eap_user_file" "$N"
+			append bss_conf "ca_cert=$ca_cert" "$N"
+			append bss_conf "server_cert=$server_cert" "$N"
+			append bss_conf "private_key=$priv_key" "$N"
+			append bss_conf "private_key_passwd=$priv_key_pwd" "$N"
+			append bss_conf "dh_file=$dh_file" "$N"
+
+			else
 
 			# legacy compatibility
 			[ -n "$auth_server" ] || json_get_var auth_server server
@@ -287,6 +303,9 @@ hostapd_set_bss_options() {
 			}
 
 			[ -n "$ownip" ] && append bss_conf "own_ip_addr=$ownip" "$N"
+
+			fi
+
 			append bss_conf "eapol_key_index_workaround=1" "$N"
 			append bss_conf "ieee8021x=1" "$N"
 			append wpa_key_mgmt "WPA-EAP"
