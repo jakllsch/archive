@@ -511,6 +511,9 @@ ar71xx_board_detect() {
 	*"Domino Pi")
 		name="gl-domino"
 		;;
+	*"DW33D")
+		name="dw33d"
+		;;
 	*"EAP300 v2")
 		name="eap300v2"
 		;;
@@ -821,6 +824,9 @@ ar71xx_board_detect() {
 	*"TL-WR1043ND v2")
 		name="tl-wr1043nd-v2"
 		;;
+	*"TL-WR1043ND v4")
+		name="tl-wr1043nd-v4"
+		;;
 	*TL-WR2543N*)
 		name="tl-wr2543n"
 		;;
@@ -1052,6 +1058,9 @@ ar71xx_board_detect() {
 	*WRT160NL)
 		name="wrt160nl"
 		;;
+	*E2100L)
+		name="e2100l"
+		;;
 	*WRT400N)
 		name="wrt400n"
 		;;
@@ -1100,6 +1109,9 @@ ar71xx_board_detect() {
 	*"HiWiFi HC6361")
 		name="hiwifi-hc6361"
 		;;
+        *"ANONABOX_PRO")
+                name="anonabox-pro"
+                ;;
 	esac
 
 	[ -z "$AR71XX_MODEL" ] && [ "${machine:0:8}" = 'TP-LINK ' ] && \

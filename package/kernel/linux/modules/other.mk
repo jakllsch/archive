@@ -890,6 +890,25 @@ endef
 
 $(eval $(call KernelPackage,random-omap))
 
+
+define KernelPackage/random-tpm
+  TITLE:= TPM hardware random support
+  SUBMENU:=$(OTHER_MENU)
+  KCONFIG:= \
+    CONFIG_HW_RANDOM_TPM=y
+  FILES:= \
+    $(LINUX_DIR)/drivers/char/hw_random/tpm-rng.ko
+  AUTOLOAD:= $(call AutoProbe, tpm-rng)
+  DEPENDS:=+kmod-random-core kmod-tpm
+endef
+
+define KernelPackage/random-tpm/description
+  TPM backed random support.
+endef
+
+$(eval $(call KernelPackage,random-tpm))
+
+
 define KernelPackage/thermal
   SUBMENU:=$(OTHER_MENU)
   TITLE:=Generic Thermal sysfs driver
@@ -1073,5 +1092,92 @@ define KernelPackage/virtio-mmio/description
 endef
 
 $(eval $(call KernelPackage,virtio-mmio))
+
+
+define KernelPackage/tpm
+  TITLE:= TPM support
+  SUBMENU:=$(OTHER_MENU)
+  KCONFIG:= \
+    CONFIG_TCG_TPM=y
+  FILES:= \
+    $(LINUX_DIR)/drivers/char/tpm/tpm.ko
+  AUTOLOAD:= $(call AutoProbe, tpm)
+endef
+
+define KernelPackage/tpm/description
+  TPM support.
+endef
+
+$(eval $(call KernelPackage,tpm))
+
+
+define KernelPackage/tpm-i2c-infineon
+  TITLE:= TPM 1.2 infineon i2c driver
+  SUBMENU:=$(OTHER_MENU)
+  KCONFIG:= \
+    CONFIG_TCG_TIS_I2C_INFINEON=y
+  FILES:= \
+    $(LINUX_DIR)/drivers/char/tpm/tpm_i2c_infineon.ko
+  AUTOLOAD:= $(call AutoProbe, tpm_i2c_infineon)
+  DEPENDS:=+kmod-tpm kmod-i2c-core
+endef
+
+define KernelPackage/tpm-i2c-infineon/description
+  TPM 1.2 support for infineon i2c devices.
+endef
+
+$(eval $(call KernelPackage,tpm-i2c-infineon))
+
+
+define KernelPackage/gpio-ich
+  TITLE:=Intel ICH GPIO support
+  SUBMENU:=$(OTHER_MENU)
+  KCONFIG:= \
+    CONFIG_GPIO_ICH
+  FILES:= \
+    $(LINUX_DIR)/drivers/gpio/gpio-ich.ko
+  AUTOLOAD:=$(call AutoLoad,55,gpio-ich)
+  DEPENDS:=@GPIO_SUPPORT
+endef
+
+define KernelPackage/gpio-ich/description
+  Intel ICH GPIO support.
+endef
+
+$(eval $(call KernelPackage,gpio-ich))
+
+
+define KernelPackage/iTCO_wdt
+  TITLE:=Intel TCO Watchdog Timer
+  SUBMENU:=$(OTHER_MENU)
+  KCONFIG:= \
+	CONFIG_ITCO_WDT \
+	CONFIG_ITCO_VENDOR_SUPPORT=n
+  FILES:= \
+	$(LINUX_DIR)/drivers/$(WATCHDOG_DIR)/iTCO_wdt.ko
+  AUTOLOAD:=$(call AutoLoad,50,iTCO_wdt,1)
+  DEPENDS:=+kmod-i2c-core
+endef
+
+define KernelPackage/iTCO_wdt/description
+  Kernel module for Intel TCO Watchdog Timer
+endef
+
+$(eval $(call KernelPackage,iTCO_wdt))
+
+
+define KernelPackage/w83627hf-wdt
+  SUBMENU:=$(OTHER_MENU)
+  TITLE:=Winbond 83627HF Watchdog Timer
+  KCONFIG:=CONFIG_W83627HF_WDT
+  FILES:=$(LINUX_DIR)/drivers/$(WATCHDOG_DIR)/w83627hf_wdt.ko
+  AUTOLOAD:=$(call AutoLoad,50,w83627hf-wdt,1)
+endef
+
+define KernelPackage/w83627hf-wdt/description
+  Kernel module for Winbond 83627HF Watchdog Timer
+endef
+
+$(eval $(call KernelPackage,w83627hf-wdt))
 
 

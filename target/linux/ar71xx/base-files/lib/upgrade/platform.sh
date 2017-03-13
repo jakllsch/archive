@@ -181,6 +181,7 @@ platform_check_image() {
 	alfa-ap96 | \
 	alfa-nx | \
 	arduino-yun | \
+        anonabox-pro | \
 	ap113 | \
 	ap121 | \
 	ap121-mini | \
@@ -193,6 +194,7 @@ platform_check_image() {
 	bxu2000n-2-a1 | \
 	db120 | \
 	dr344 | \
+	dw33d |\
 	f9k1115v2 |\
 	hornet-ub | \
 	mr12 | \
@@ -294,6 +296,7 @@ platform_check_image() {
 		;;
 
 	mynet-rext|\
+	e2100l|\
 	wrt160nl)
 		cybertan_check_image "$1" && return 0
 		return 1
@@ -399,6 +402,7 @@ platform_check_image() {
 	tl-wr1041n-v2 | \
 	tl-wr1043nd | \
 	tl-wr1043nd-v2 | \
+	tl-wr1043nd-v4| \
 	tl-wr2543n)
 		local magic_ver="0100"
 
